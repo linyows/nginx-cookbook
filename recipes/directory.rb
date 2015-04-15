@@ -1,11 +1,16 @@
 # Cookbook Name:: nginxxx
 # Recipe:: directory
 
-directory '/etc/nginx' do
-  owner 'root'
-  group node['root_group']
-  mode '0755'
-  recursive true
+%w(
+  /etc/nginx
+  /var/cache/nginx
+).each do |path|
+  directory path do
+    owner 'root'
+    group node['root_group']
+    mode '0755'
+    recursive true
+  end
 end
 
 directory '/var/log/nginx' do
