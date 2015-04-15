@@ -39,6 +39,21 @@ bash "install nginx-#{nginx_version}" do
   not_if "which nginx"
 end
 
+template '/etc/init.d/nginx' do
+  source 'init.sh.erb'
+  owner 'root'
+  group node['root_group']
+  mode '0755'
+  cookbook node['nginxxx']['init_cookbook']
+end
+
+template node['nginxxx']['sysconfig'] do
+  source 'sysconfig.erb'
+  owner  'root'
+  group  node['root_group']
+  mode   '0644'
+end
+
 user node['nginxxx']['user'] do
   system true
   shell '/bin/false'
