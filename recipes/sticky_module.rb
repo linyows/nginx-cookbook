@@ -1,8 +1,8 @@
 # Cookbook Name:: nginxxx
 # Recipe:: stikcy_module
 
-stikcy_module_version = default['nginxxx']['sticky_module']['version']
-stikcy_module_hash = default['nginxxx']['sticky_module']['hash']
+stikcy_module_version = node['nginxxx']['sticky_module']['version']
+stikcy_module_hash = node['nginxxx']['sticky_module']['hash']
 
 cache_path = Chef::Config[:file_cache_path]
 
