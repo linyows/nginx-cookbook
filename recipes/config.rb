@@ -1,18 +1,8 @@
 # Cookbook Name:: nginxxx
 # Recipe:: config
 
-cookbook_file 'init.sh' do
-  path '/etc/init.d/nginx'
-  source 'init.sh'
-  cookbook node['nginxxx']['init_cookbook']
-  owner 'root'
-  group 'root'
-  mode '0755'
-end
-
-cookbook_file 'nginx.conf' do
-  path '/etc/nginx/nginx.conf'
-  source 'nginx.conf'
+template '/etc/nginx/nginx.conf' do
+  source 'nginx.conf.erb'
   cookbook node['nginxxx']['conf_cookbook']
   owner 'root'
   group 'root'
