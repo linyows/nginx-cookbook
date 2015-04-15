@@ -25,8 +25,9 @@ bash "expand nginx-#{nginx_version}" do
   CODE
 end
 
-cookbook_file "#{cache_path}/nginx-#{nginx_version}/configure_with_options" do
-  source 'configure_with_options'
+template "#{cache_path}/nginx-#{nginx_version}/configure_with_options" do
+  source 'configure_with_options.sh.erb'
+  cookbook node['nginxxx']['configure_cookbook']
   mode '0755'
 end
 
