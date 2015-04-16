@@ -77,3 +77,11 @@ bash "mv #{node['nginxxx']['dir']}/html /usr/share/nginx/html" do
   CODE
   not_if "test -d /usr/share/nginx/html"
 end
+
+template '/etc/logrotate.d/nginx' do
+  source 'nginx.logrotate.erb'
+  owner  'root'
+  group  node['root_group']
+  mode   '0644'
+  cookbook node['nginxxx']['logrotate_cookbook']
+end

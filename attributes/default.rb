@@ -9,6 +9,7 @@ default['nginxxx']['default_site']       = true
 default['nginxxx']['init_cookbook']      = 'nginxxx'
 default['nginxxx']['conf_cookbook']      = 'nginxxx'
 default['nginxxx']['configure_cookbook'] = 'nginxxx'
+default['nginxxx']['logrotate_cookbook'] = 'nginxxx'
 
 default['nginxxx']['dir']                = '/etc/nginx'
 default['nginxxx']['pid']                = '/var/run/nginx.pid'
