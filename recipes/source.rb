@@ -72,6 +72,7 @@ end
 
 bash "mv #{node['nginxxx']['dir']}/html /usr/share/nginx/html" do
   code <<-CODE
+    mkdir -p /usr/share/nginx
     mv #{node['nginxxx']['dir']}/html /usr/share/nginx/html
   CODE
   not_if "test -d /usr/share/nginx/html"
