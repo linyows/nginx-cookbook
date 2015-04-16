@@ -1,0 +1,16 @@
+[Unit]
+Description=nginx - high performance web server
+Documentation=http://nginx.org/en/docs/
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=<%= node['nginxxx']['pid'] %>
+ExecStartPre=/usr/sbin/nginx -t -c <%= node['nginxxx']['dir'] %>/nginx.conf
+ExecStart=/usr/sbin/nginx -c <%= node['nginxxx']['dir'] %>/nginx.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

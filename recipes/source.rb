@@ -9,7 +9,6 @@ include_recipe 'build-essential::default'
 %w(
   pcre-devel
   openssl-devel
-  tar
 ).each { |name| package name }
 
 remote_file "#{cache_path}/nginx-#{nginx_version}.tar.gz" do
@@ -26,7 +25,7 @@ bash "expand nginx-#{nginx_version}" do
 end
 
 template "#{cache_path}/nginx-#{nginx_version}/configure_with_options" do
-  source 'configure_with_options.sh.erb'
+  source 'nginx.configure_with_options.erb'
   cookbook node['nginxxx']['configure_cookbook']
   mode '0755'
 end
@@ -40,16 +39,26 @@ bash "install nginx-#{nginx_version}" do
   not_if "which nginx"
 end
 
-template '/etc/init.d/nginx' do
-  source 'init.sh.erb'
-  owner 'root'
-  group node['root_group']
-  mode '0755'
-  cookbook node['nginxxx']['init_cookbook']
+if node['platform_family'] == 'rhel' && node['platform_version'].to_i >= 7
+  template '/usr/lib/systemd/system/nginx.service' do
+    source 'nginx.service.erb'
+    owner 'root'
+    group node['root_group']
+    mode '0755'
+    cookbook node['nginxxx']['init_cookbook']
+  end
+else
+  template '/etc/init.d/nginx' do
+    source 'nginx.init.erb'
+    owner 'root'
+    group node['root_group']
+    mode '0755'
+    cookbook node['nginxxx']['init_cookbook']
+  end
 end
 
 template node['nginxxx']['sysconfig'] do
-  source 'sysconfig.erb'
+  source 'nginx.sysconfig.erb'
   owner  'root'
   group  node['root_group']
   mode   '0644'
@@ -59,4 +68,11 @@ user node['nginxxx']['user'] do
   system true
   shell '/bin/false'
   home '/var/www'
+end
+
+bash "mv #{node['nginxxx']['dir']}/html /usr/share/nginx/html" do
+  code <<-CODE
+    mv #{node['nginxxx']['dir']}/html /usr/share/nginx/html
+  CODE
+  not_if "test -d /usr/share/nginx/html"
 end

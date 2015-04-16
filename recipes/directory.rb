@@ -1,10 +1,10 @@
 # Cookbook Name:: nginxxx
 # Recipe:: directory
 
-%w(
-  /etc/nginx
-  /var/cache/nginx
-).each do |path|
+[
+  node['nginxxx']['dir'],
+  node['nginxxx']['cache']
+].each do |path|
   directory path do
     owner 'root'
     group node['root_group']
@@ -13,7 +13,7 @@
   end
 end
 
-directory '/var/log/nginx' do
+directory node['nginxxx']['log'] do
   owner node['nginxxx']['user']
   mode '0755'
   recursive true
@@ -31,9 +31,13 @@ end
   sites-enabled
   conf.d
 ).each do |dir_name|
-  directory "/etc/nginx/#{dir_name}" do
+  directory "#{node['nginxxx']['dir']}/#{dir_name}" do
     owner 'root'
     group node['root_group']
     mode  '0755'
   end
+end
+
+link "#{node['nginxxx']['dir']}/logs" do
+  to "#{node['nginxxx']['log']}"
 end
