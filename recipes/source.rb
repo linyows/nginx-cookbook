@@ -36,7 +36,7 @@ bash "install nginx-#{nginx_version}" do
     ./configure_with_options
     make && make install
   CODE
-  not_if "which nginx && nginx -v 2>&1 | grep #{nginx_version}"
+  not_if "nginx -v 2>&1 | grep -q #{nginx_version}"
 end
 
 if node['platform_family'] == 'rhel' && node['platform_version'].to_i >= 7
