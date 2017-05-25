@@ -34,5 +34,5 @@ when 'debian'
     default['nginxxx']['pid']  = '/run/nginx.pid'
     default['nginxxx']['lock'] = '/run/nginx.lock'
   end
-  default['nginxxx']['release'] = "1~#{node['lsb']['codename']}#{node['lsb']['codename']}"
+  default['nginxxx']['release'] = "0#{node['platform']}0.#{node['platform_version']}.4"
 end
