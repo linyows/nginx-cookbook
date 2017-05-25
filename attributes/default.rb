@@ -2,7 +2,6 @@
 # Attributes:: default
 
 default['nginxxx']['version']            = '1.9.5'
-default['nginxxx']['release']            = "1.el#{node['platform_version'].to_i}.ngx"
 default['nginxxx']['build']              = false
 default['nginxxx']['default_site']       = true
 
@@ -26,6 +25,7 @@ when 'rhel', 'fedora'
     default['nginxxx']['pid']  = '/run/nginx.pid'
     default['nginxxx']['lock'] = '/run/nginx.lock'
   end
+  default['nginxxx']['release'] = "1.el#{node['platform_version'].to_i}.ngx"
 when 'debian'
   default['nginxxx']['repository'] = "http://nginx.org/packages/#{node['platform']}"
   default['nginxxx']['user'] = 'www-data'
@@ -34,4 +34,5 @@ when 'debian'
     default['nginxxx']['pid']  = '/run/nginx.pid'
     default['nginxxx']['lock'] = '/run/nginx.lock'
   end
+  default['nginxxx']['release'] = "1~#{node['lsb']['codename']}#{node['lsb']['codename']}"
 end
