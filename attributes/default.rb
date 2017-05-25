@@ -1,7 +1,7 @@
 # Cookbook Name:: nginxxx
 # Attributes:: default
 
-default['nginxxx']['version']            = '1.9.5'
+default['nginxxx']['version']            = '1.10.0'
 default['nginxxx']['build']              = false
 default['nginxxx']['default_site']       = true
 
