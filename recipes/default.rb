@@ -9,7 +9,7 @@ else
   package 'nginx' do
     version "#{node['nginxxx']['version']}-#{node['nginxxx']['release']}"
     action :install
-    options '--disablerepo=* --enablerepo=nginx'
+    options '--disablerepo=* --enablerepo=nginx' if platform_family?('rhel')
   end
 end
 
