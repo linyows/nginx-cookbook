@@ -21,7 +21,7 @@ when 'rhel', 'fedora'
   default['nginxxx']['repository'] = "http://nginx.org/packages/mainline/centos/#{node['platform_version'].to_i}/$basearch/"
   default['nginxxx']['user'] = 'nginx'
   default['nginxxx']['sysconfig'] = '/etc/sysconfig/nginx'
-  if platform == 'centos' && platform_version >= '7'
+  if node['platform'] == 'centos' && node['platform_version'] >= '7'
     default['nginxxx']['pid']  = '/run/nginx.pid'
     default['nginxxx']['lock'] = '/run/nginx.lock'
   end
@@ -30,7 +30,7 @@ when 'debian'
   default['nginxxx']['repository'] = "http://nginx.org/packages/#{node['platform']}"
   default['nginxxx']['user'] = 'www-data'
   default['nginxxx']['sysconfig'] = '/etc/default/nginx'
-  if platform == 'ubuntu' && platform_version >= '14.04'
+  if node['platform'] == 'ubuntu' && node['platform_version'] >= '14.04'
     default['nginxxx']['pid']  = '/run/nginx.pid'
     default['nginxxx']['lock'] = '/run/nginx.lock'
   end
