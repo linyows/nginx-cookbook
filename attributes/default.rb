@@ -2,7 +2,7 @@
 # Attributes:: default
 
 default['nginxxx']['version']            = '1.12.0'
--
+
 default['nginxxx']['build']              = false
 default['nginxxx']['default_site']       = true
 
