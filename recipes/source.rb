@@ -6,10 +6,18 @@ cache_path = Chef::Config[:file_cache_path]
 
 include_recipe 'build-essential::default'
 
-%w(
-  pcre-devel
-  openssl-devel
-).each { |name| package name }
+case node['platform_family']
+when 'rhel', 'fedora'
+  %w(
+    pcre-devel
+    openssl-devel
+  ).each { |name| package name }
+when 'debian'
+  %w(
+    libpcre3-dev
+    libssl-dev
+  ).each { |name| package name }
+end
 
 remote_file "#{cache_path}/nginx-#{nginx_version}.tar.gz" do
   source "http://nginx.org/download/nginx-#{nginx_version}.tar.gz"
@@ -39,7 +47,14 @@ bash "install nginx-#{nginx_version}" do
   not_if "nginx -v 2>&1 | grep -q #{nginx_version}"
 end
 
-if node['platform_family'] == 'rhel' && node['platform_version'].to_i >= 7
+if node['platform_family'] == 'debian' || (node['platform_family'] == 'rhel' && node['platform_version'].to_i >= 7)
+  directory '/usr/lib/systemd/system' do
+    owner 'root'
+    group node['root_group']
+    mode '0755'
+    action :create
+  end
+
   template '/usr/lib/systemd/system/nginx.service' do
     source 'nginx.service.erb'
     owner 'root'
