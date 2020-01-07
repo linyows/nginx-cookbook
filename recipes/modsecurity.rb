@@ -45,6 +45,7 @@ cache_path = Chef::Config[:file_cache_path]
 end
 
 execute 'make_modsecurity' do
+  not_if 'test -d /usr/local/modsecurity' unless node['nginxxx']['modsecurity']['force_build']
   command <<-EOS
   make clean
   sh build.sh
@@ -56,5 +57,4 @@ execute 'make_modsecurity' do
   EOS
   environment 'CFLAGS' => "-DDEFAULT_USER=\\\"#{node['nginxxx']['user']}\\\" -DDEFAULT_GROUP=\\\"#{node['nginxxx']['user']}\\\""
   cwd "/usr/local/src/modsecurity"
-  not_if 'test -d /usr/local/modsecurity'
 end
