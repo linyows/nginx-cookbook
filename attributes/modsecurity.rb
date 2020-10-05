@@ -2,5 +2,5 @@
 # Attributes:: modsecurity
 
 default['nginxxx']['modsecurity']['branch'] = 'v3/master'
-default['nginxxx']['owasp-modsecurity-crs']['branch'] = 'v3.0/master'
 default['nginxxx']['modsecurity-nginx']['branch'] = 'master'
+default['nginxxx']['coreruleset']['branch'] = 'v3.3/master'
