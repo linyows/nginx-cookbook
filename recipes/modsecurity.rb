@@ -33,13 +33,13 @@ end
 cache_path = Chef::Config[:file_cache_path]
 
 %w(
-  SpiderLabs/ModSecurity
-  SpiderLabs/ModSecurity-nginx
-  coreruleset/coreruleset
+  modsecurity
+  modsecurity-nginx
+  modsecurity-ruleset
 ).each do |n|
-  git "/usr/local/src/#{n.split('/')[1].downcase}" do
-    repository "https://github.com/#{n.downcase}"
-    revision node['nginxxx'][n.split('/')[1].downcase]['branch']
+  git "/usr/local/src/#{n}" do
+    repository node['nginxxx'][n]['repository']
+    revision   node['nginxxx'][n]['branch']
     action :sync
   end
 end
