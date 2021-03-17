@@ -4,6 +4,7 @@
 default['nginxxx']['version']            = '1.12.0'
 
 default['nginxxx']['build']              = false
+default['nginxxx']['force_build']        = false
 default['nginxxx']['default_site']       = true
 
 default['nginxxx']['init_cookbook']      = 'nginxxx'

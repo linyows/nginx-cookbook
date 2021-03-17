@@ -44,7 +44,7 @@ bash "install nginx-#{nginx_version}" do
     ./configure_with_options
     make && make install
   CODE
-  not_if "nginx -v 2>&1 | grep -q #{nginx_version}"
+  not_if "nginx -v 2>&1 | grep -q #{nginx_version}" unless node['nginxxx']['force_build']
 end
 
 if node['platform_family'] == 'debian' || (node['platform_family'] == 'rhel' && node['platform_version'].to_i >= 7)
